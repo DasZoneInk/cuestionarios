@@ -1,0 +1,83 @@
+---
+title: "Defensorías Públicas"
+author: "Erick René Hernández Cervantes"
+date: 2019-09-24T21:13:14-05:00
+categories: ["Sistema de Justicia"]
+tags: ["Sistema de Justicia", "Defensoría Pública", "Derecho penal"]
+header-includes:
+  - \usepackage{caption}
+  - \captionsetup[figure]{name=Figura}
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+ library(tidyverse)
+ library(readxl)
+ library(plotly)
+```
+
+# Introducción
+
+Los servicios de la Defensoría Pública están regulados en el artículo 17 de la Constitución Política de los Estados Unidos Mexicanos. Ahí se establece que la federación y las entidades federativas son responsables de asegurar un servicio de defensoría de calidad, haciendo énfasis en el servicio profesional de carrera.
+
+La siguiente infografía tiene como propósito mostrar información de las Defensorías estatales para conocer su estructura y desempeño durante el año 2019. Vale la pena mencionar que el Instituto Federal de la Defensoría Pública (IFDP) no es objeto de estudio en esta infografía y para conocer la información sobre dicha institución puede consultarse el [Censo Nacional de Impartición de Justicia Federal](https://www.inegi.org.mx/programas/cnijf/2020/) y la sección de estadística del sitio del [IFDP](https://www.ifdp.cjf.gob.mx/paginas/subEstadistica.htm?pageName=informacion%2FdefensaPenal.html). Asimismo, para complementar la información presentada en esta infografía se recomienda consultar el [Censo Nacional de Impartición de Justicia Estatal](https://www.inegi.org.mx/programas/cnije/2019/) y el [Censo Nacional de Gobierno, Seguridad Pública y Sistema Penitenciario Estatales](https://www.inegi.org.mx/programas/cngspspe/2019/)
+
+# Defensores públicos y su especialización
+
+A nivel nacional se cuenta con una plantilla de 2,642 defensores de los cuales 1,414 son hombres y 1,228 son mujeres. No hay una disparidad de genero pronunciada en ninguna entidad federativa y, de hecho, hay mas defensoras que defensores en CDMX, Chihuahua, Baja California, Zacatecas, Querétaro, Baja California Sur, Campeche, Morelos, Puebla y Tlaxcala. La relación de género más asimétrica se presenta en Jalisco donde hay 2.85 defensores por cada defensora. Esta información puede apreciarse en el gráfico  \@ref(fig:G-D1)
+
+``````{r G-D1, fig.cap='Grafico 1', tidy=FALSE, echo=F, results="asis", message=F, warning=F}
+ df <- readxl::read_xlsx("C:/Users/ehernandez/Documents/Subdireccion/Proyectos propios/Desarrollo/AppCuestionario/Cuestionarios/static/data/info muestra app mes.xlsx")
+# 
+ df$Genero <- as.factor(df$Genero)
+ grafica_barr_stack <- function(data, cve_pregunta, year){
+
+  d <- data %>% 
+    filter(CVE_Pregunta==cve_pregunta, Year==year)
+  
+  d1 <- d %>% group_by(`Entidad Federativa`) %>% 
+    summarize(z=sum(as.numeric(Respuesta), na.rm = T)) %>% dplyr::arrange(z)
+  
+  d$`Entidad Federativa` <- fct_rev( factor(d$`Entidad Federativa`, levels=d1$`Entidad Federativa`[order(d1$z)]))
+  
+plot_ly(
+  data=d,
+  x=~`Entidad Federativa`, 
+  y=~as.integer(`Respuesta`),
+  color=~`Genero`, 
+
+  text=~`Genero`,
+  type="bar",
+  hovertemplate="Total:%{y:.0f} <br> Sexo:%{text} <br> Entidad Federativa:%{x}",
+  colors = c("H" = "gray", 
+             "M" = "steelblue")
+  
+) %>% 
+  layout(barmode="stack",
+         xaxis = list(title = '', tickangle = 270),
+         showlegend = FALSE,
+         yaxis = list(title = '', tickformat=',d'),
+         legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5),
+
+         title=paste("Total de defensores por entidad federativa y sexo", year)
+         ) %>%
+  config(displaylogo = FALSE) #%>% 
+  # layout(annotations = 
+  #          list(x = 1, y = 1, text = "Nota: data I found somewhere.", 
+  #               showarrow = F, xref='paper', yref='paper', 
+  #               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+  #               font=list(size=15, color="gray"))
+  # )
+}
+
+grafica_barr_stack(data=df, cve_pregunta = 1, year=2018) # con género
+```
+
+# Capacitaciones impartidas a los defensores públicos
+
+Aqui podemos poner emojis inclusive, como este Koala bebé
+:koala:
+

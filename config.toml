@@ -1,0 +1,43 @@
+baseurl = "/"
+languageCode = "es-mx"
+title = "Cuestionarios Segob 2019"
+theme = "hugo-lithium"
+googleAnalytics = ""
+enableEmoji = true
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[permalinks]
+    post = "/:year/:slug/"
+
+[[menu.main]]
+    name = "Acerca de"
+    url = "/about/"
+[[menu.main]]
+    name = "Unidad de apoyo al Sistema de Justicia"
+    url = "http://justicia.segob.gob.mx/"
+[[menu.main]]
+#    name = "Twitter"
+#    url = "https://twitter.com/rstudio"
+
+[params]
+    description = "SEGOB-UASJ Cuestionarios de los operadores del sistema de justcia"
+
+    # options for highlight.js (version, additional languages, and theme)
+    highlightjsVersion = "9.12.0"
+    highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
+    highlightjsLang = ["r", "yaml"]
+    highlightjsTheme = "github"
+
+    MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
+    MathJaxVersion = "2.7.5"
+
+    # path to the favicon, under "static"
+    favicon = "favicon.ico"
+
+    [params.logo]
+    url = "SEGOB_Logo_2019.svg"
+    width = 300
+    height = 74
+    alt = "Logo"
+
