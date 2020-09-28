@@ -28,7 +28,7 @@ La siguiente infografía tiene como propósito mostrar información de las Defen
 A nivel nacional se cuenta con una plantilla de 2,642 defensores de los cuales 1,414 son hombres y 1,228 son mujeres. No hay una disparidad de genero pronunciada en ninguna entidad federativa y, de hecho, hay mas defensoras que defensores en CDMX, Chihuahua, Baja California, Zacatecas, Querétaro, Baja California Sur, Campeche, Morelos, Puebla y Tlaxcala. La relación de género más asimétrica se presenta en Jalisco donde hay 2.85 defensores por cada defensora. Esta información puede apreciarse en el gráfico  \@ref(fig:G-D1)
 
 ``````{r G-D1, fig.cap='Grafico 1', tidy=FALSE, echo=F, results="asis", message=F, warning=F}
- df <- readxl::read_xlsx("C:/Users/ehernandez/Documents/Subdireccion/Proyectos propios/Desarrollo/AppCuestionario/Cuestionarios/static/data/info muestra app mes.xlsx")
+ df <- readxl::read_xlsx("info muestra app mes.xlsx")
 # 
  df$Genero <- as.factor(df$Genero)
  grafica_barr_stack <- function(data, cve_pregunta, year){
