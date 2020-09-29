@@ -28,52 +28,7 @@ La siguiente infografía tiene como propósito mostrar información de las Defen
 A nivel nacional se cuenta con una plantilla de 2,642 defensores de los cuales 1,414 son hombres y 1,228 son mujeres. No hay una disparidad de genero pronunciada en ninguna entidad federativa y, de hecho, hay mas defensoras que defensores en CDMX, Chihuahua, Baja California, Zacatecas, Querétaro, Baja California Sur, Campeche, Morelos, Puebla y Tlaxcala. La relación de género más asimétrica se presenta en Jalisco donde hay 2.85 defensores por cada defensora. Esta información puede apreciarse en el gráfico  \@ref(fig:G-D1)
 
 ``````{r G-D1, fig.cap='Grafico 1', tidy=FALSE, echo=F, results="asis", message=F, warning=F}
- df <- readxl::read_xlsx("info muestra app mes.xlsx")
-# 
- df$Genero <- as.factor(df$Genero)
- grafica_barr_stack <- function(data, cve_pregunta, year){
 
-  d <- data %>% 
-    filter(CVE_Pregunta==cve_pregunta, Year==year)
-  
-  d1 <- d %>% group_by(`Entidad Federativa`) %>% 
-    summarize(z=sum(as.numeric(Respuesta), na.rm = T)) %>% dplyr::arrange(z)
-  
-  d$`Entidad Federativa` <- fct_rev( factor(d$`Entidad Federativa`, levels=d1$`Entidad Federativa`[order(d1$z)]))
-  
-plot_ly(
-  data=d,
-  x=~`Entidad Federativa`, 
-  y=~as.integer(`Respuesta`),
-  color=~`Genero`, 
-
-  text=~`Genero`,
-  type="bar",
-  hovertemplate="Total:%{y:.0f} <br> Sexo:%{text} <br> Entidad Federativa:%{x}",
-  colors = c("H" = "gray", 
-             "M" = "steelblue")
-  
-) %>% 
-  layout(barmode="stack",
-         xaxis = list(title = '', tickangle = 270),
-         showlegend = FALSE,
-         yaxis = list(title = '', tickformat=',d'),
-         legend = list(orientation = "h",   # show entries horizontally
-                       xanchor = "center",  # use center of legend as anchor
-                       x = 0.5),
-
-         title=paste("Total de defensores por entidad federativa y sexo", year)
-         ) %>%
-  config(displaylogo = FALSE) #%>% 
-  # layout(annotations = 
-  #          list(x = 1, y = 1, text = "Nota: data I found somewhere.", 
-  #               showarrow = F, xref='paper', yref='paper', 
-  #               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-  #               font=list(size=15, color="gray"))
-  # )
-}
-
-grafica_barr_stack(data=df, cve_pregunta = 1, year=2018) # con género
 ```
 
 # Capacitaciones impartidas a los defensores públicos
